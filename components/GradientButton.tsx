@@ -1,0 +1,85 @@
+import React from 'react';
+import {
+  Pressable,
+  StyleSheet,
+  Text,
+  ViewStyle,
+  GestureResponderEvent,
+} from 'react-native';
+import { LinearGradient } from 'expo-linear-gradient';
+import { cores, fontes } from '@/constants/colors';
+
+type Props = {
+  label: string;
+  onPress?: (e: GestureResponderEvent) => void;
+  variant?: 'primary' | 'secondary' | 'gold';
+  style?: ViewStyle;
+  disabled?: boolean;
+};
+
+export default function GradientButton({
+  label,
+  onPress,
+  variant = 'primary',
+  style,
+  disabled,
+}: Props) {
+  const colors: [string, string] =
+    variant === 'primary'
+      ? [cores.accent, cores.accentSoft]
+      : variant === 'gold'
+        ? [cores.gold, cores.goldLight]
+        : [cores.card, cores.surface];
+
+  return (
+    <Pressable
+      onPress={disabled ? undefined : onPress}
+      style={({ pressed }) => [
+        styles.wrap,
+        style,
+        pressed && { opacity: 0.85, transform: [{ scale: 0.99 }] },
+        disabled && { opacity: 0.4 },
+      ]}
+    >
+      <LinearGradient
+        colors={colors}
+        start={{ x: 0, y: 0 }}
+        end={{ x: 1, y: 1 }}
+        style={[
+          styles.btn,
+          variant === 'secondary' && {
+            borderWidth: 1,
+            borderColor: cores.border,
+          },
+        ]}
+      >
+        <Text
+          style={[
+            styles.label,
+            variant === 'secondary' && { color: cores.text },
+            variant === 'gold' && { color: '#1a1200' },
+          ]}
+        >
+          {label}
+        </Text>
+      </LinearGradient>
+    </Pressable>
+  );
+}
+
+const styles = StyleSheet.create({
+  wrap: { width: '100%' },
+  btn: {
+    paddingVertical: 16,
+    paddingHorizontal: 24,
+    borderRadius: 14,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  label: {
+    fontFamily: fontes.corpoMedium,
+    color: '#fff',
+    fontSize: 16,
+    letterSpacing: 0.4,
+  },
+});
