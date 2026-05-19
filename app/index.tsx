@@ -1,18 +1,27 @@
 import React from 'react';
-import { ScrollView, StyleSheet, Text, View } from 'react-native';
+import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { useRouter } from 'expo-router';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import CosmicBackground from '@/components/CosmicBackground';
 import GradientButton from '@/components/GradientButton';
 import FadeIn from '@/components/FadeIn';
+import { useSession } from '@/hooks/useSession';
 import { cores, fontes } from '@/constants/colors';
 
 export default function Landing() {
   const router = useRouter();
+  const { autenticado, nome } = useSession();
 
   return (
     <CosmicBackground particles={80}>
       <SafeAreaView style={styles.safe}>
+        <View style={styles.topo}>
+          <Pressable onPress={() => router.push('/conta')} hitSlop={10}>
+            <Text style={styles.topoTxt}>
+              {autenticado ? `Olá, ${nome ?? 'eu'}` : 'Entrar'}
+            </Text>
+          </Pressable>
+        </View>
         <ScrollView
           contentContainerStyle={styles.content}
           showsVerticalScrollIndicator={false}
@@ -95,6 +104,13 @@ function Divider() {
 
 const styles = StyleSheet.create({
   safe: { flex: 1 },
+  topo: { paddingHorizontal: 24, paddingTop: 4, alignItems: 'flex-end' },
+  topoTxt: {
+    fontFamily: fontes.mono,
+    color: cores.muted,
+    fontSize: 12,
+    letterSpacing: 2,
+  },
   content: {
     flexGrow: 1,
     paddingHorizontal: 32,

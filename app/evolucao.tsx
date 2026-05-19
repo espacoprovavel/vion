@@ -8,6 +8,7 @@ import FadeIn from '@/components/FadeIn';
 import BottomNav from '@/components/BottomNav';
 import GradientButton from '@/components/GradientButton';
 import { Storage, type TestEntry, type Libertacao } from '@/lib/storage';
+import { useSession } from '@/hooks/useSession';
 import { getNivelMaisProximo } from '@/constants/niveis';
 import { getArquetipoPorHz } from '@/constants/arquetipos';
 import { getChakraPorHz } from '@/constants/chakras';
@@ -16,18 +17,20 @@ import { cores, fontes } from '@/constants/colors';
 
 export default function Evolucao() {
   const router = useRouter();
+  const { nome: nomeSessao, autenticado } = useSession();
   const [hist, setHist] = useState<TestEntry[]>([]);
   const [libs, setLibs] = useState<Libertacao[]>([]);
   const [protoInicio, setProtoInicio] = useState<string | null>(null);
   const [diasFeitos, setDiasFeitos] = useState<number[]>([]);
-  const [nome, setNome] = useState('');
+  const [nomeLocal, setNomeLocal] = useState('');
+  const nome = nomeSessao ?? nomeLocal;
 
   useEffect(() => {
     Storage.getHistorico().then(setHist);
     Storage.getLibertacoes().then(setLibs);
     Storage.getProtocoloInicio().then(setProtoInicio);
     Storage.getDiasFeitos().then(setDiasFeitos);
-    Storage.getNome().then((n) => setNome(n ?? ''));
+    Storage.getNome().then((n) => setNomeLocal(n ?? ''));
   }, []);
 
   const ultimo = hist[hist.length - 1];
@@ -61,6 +64,13 @@ export default function Evolucao() {
   return (
     <CosmicBackground particles={50} glow={corNivel}>
       <SafeAreaView style={{ flex: 1 }}>
+        <View style={styles.topo}>
+          <Pressable onPress={() => router.push('/conta')} hitSlop={10}>
+            <Text style={styles.topoTxt}>
+              {autenticado ? '◐ Conta' : 'Entrar'}
+            </Text>
+          </Pressable>
+        </View>
         <ScrollView contentContainerStyle={styles.content}>
           <FadeIn>
             <Text style={styles.label}>EVOLUÇÃO</Text>
@@ -217,6 +227,13 @@ function Card({
 }
 
 const styles = StyleSheet.create({
+  topo: { paddingHorizontal: 20, paddingTop: 4, alignItems: 'flex-end' },
+  topoTxt: {
+    fontFamily: fontes.mono,
+    color: cores.muted,
+    fontSize: 12,
+    letterSpacing: 2,
+  },
   content: { paddingHorizontal: 20, paddingTop: 16, paddingBottom: 24 },
   label: {
     fontFamily: fontes.mono,

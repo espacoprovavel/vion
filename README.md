@@ -57,6 +57,23 @@ hz = round(mediaB1 * 0.40 + mediaB2 * 0.60)
 
 Depois `getNivelMaisProximo(hz)` mapeia para um dos 17 níveis canónicos.
 
+## Autenticação (opcional)
+
+A app funciona em modo anónimo (dados só no dispositivo). Para activar **login com email + palavra-passe**:
+
+1. Cria um projecto em [supabase.com](https://supabase.com).
+2. Em **Project Settings → API** copia `URL` e `anon key`.
+3. Cola no `.env`:
+   ```
+   EXPO_PUBLIC_SUPABASE_URL=https://xxx.supabase.co
+   EXPO_PUBLIC_SUPABASE_ANON_KEY=eyJ...
+   ```
+4. Em **SQL Editor**, cola o conteúdo de `supabase/schema.sql` e executa.
+5. Em **Authentication → Providers** garante que `Email` está ligado. Para dev, desactiva "Confirm email" para entrares sem confirmar.
+6. Reinicia `npx expo start`.
+
+Ecrãs incluídos: `/auth/login`, `/auth/signup`, `/auth/recuperar`, `/conta`. Botão "Entrar" aparece no canto superior do Landing e da Evolução.
+
 ## Pagamentos
 
 O fluxo passa por **RevenueCat** com offerings/packages — configura no dashboard:
