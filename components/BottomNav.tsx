@@ -8,7 +8,7 @@ type Tab = 'arquetipos' | 'alinhados' | 'eu';
 const TABS: { id: Tab; icon: string; label: string; href: any }[] = [
   { id: 'arquetipos', icon: '✦', label: 'Arquétipos', href: '/arquetipos' },
   { id: 'alinhados', icon: '○', label: 'Alinhados', href: '/alinhados' },
-  { id: 'eu', icon: '◐', label: 'Eu', href: '/tracker' },
+  { id: 'eu', icon: '◐', label: 'Evolução', href: '/evolucao' },
 ];
 
 export default function BottomNav({ active }: { active: Tab }) {

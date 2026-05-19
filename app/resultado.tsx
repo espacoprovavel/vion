@@ -156,20 +156,20 @@ export default function Resultado() {
           <FadeIn delay={2300}>
             <View style={styles.actions}>
               <GradientButton
-                label="Guia de Elevação Completo — €4,99"
+                label="Começar o trabalho de elevação"
                 variant="gold"
-                onPress={() => router.push({ pathname: '/guia', params: { hz: String(nivel.hz) } })}
+                onPress={() => router.push('/evolucao')}
+              />
+              <View style={{ height: 12 }} />
+              <GradientButton
+                label="Ver Arquétipos Alinhados"
+                onPress={() => router.push('/alinhados')}
               />
               <View style={{ height: 12 }} />
               <GradientButton
                 label="Partilhar o meu resultado"
                 variant="secondary"
                 onPress={partilhar}
-              />
-              <View style={{ height: 12 }} />
-              <GradientButton
-                label="Ver Arquétipos Alinhados"
-                onPress={() => router.push('/alinhados')}
               />
               <Pressable onPress={() => router.replace('/teste')} style={{ marginTop: 18 }}>
                 <Text style={styles.refazer}>Refazer o teste</Text>

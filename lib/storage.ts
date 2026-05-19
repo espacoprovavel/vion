@@ -4,11 +4,23 @@ const KEY_NOME = 'vion:nome';
 const KEY_HIST = 'vion:historico';
 const KEY_UNLOCK = 'vion:guia-unlocked';
 const KEY_ULTIMO = 'vion:ultimo-teste';
+const KEY_PROTO_INICIO = 'vion:protocolo-inicio';
+const KEY_PROTO_DIAS = 'vion:protocolo-dias';
+const KEY_LIBERTACOES = 'vion:libertacoes';
+const KEY_OCULTOS = 'vion:ocultos';
 
 export type TestEntry = {
   hz: number;
   data: string; // ISO
   nivelHz: number;
+};
+
+export type Libertacao = {
+  data: string;
+  alvo: string;
+  intensidadeAntes: number;
+  intensidadeDepois: number;
+  sensacao: string;
 };
 
 export const Storage = {
@@ -45,7 +57,59 @@ export const Storage = {
     const v = await AsyncStorage.getItem(KEY_UNLOCK);
     return v === '1';
   },
+  async iniciarProtocolo() {
+    await AsyncStorage.setItem(KEY_PROTO_INICIO, new Date().toISOString());
+    await AsyncStorage.setItem(KEY_PROTO_DIAS, JSON.stringify([]));
+  },
+  async getProtocoloInicio(): Promise<string | null> {
+    return AsyncStorage.getItem(KEY_PROTO_INICIO);
+  },
+  async marcarDia(dia: number) {
+    const raw = await AsyncStorage.getItem(KEY_PROTO_DIAS);
+    const arr: number[] = raw ? JSON.parse(raw) : [];
+    if (!arr.includes(dia)) arr.push(dia);
+    await AsyncStorage.setItem(KEY_PROTO_DIAS, JSON.stringify(arr));
+  },
+  async getDiasFeitos(): Promise<number[]> {
+    const raw = await AsyncStorage.getItem(KEY_PROTO_DIAS);
+    return raw ? JSON.parse(raw) : [];
+  },
+  async resetProtocolo() {
+    await AsyncStorage.multiRemove([KEY_PROTO_INICIO, KEY_PROTO_DIAS]);
+  },
+  async pushLibertacao(l: Libertacao) {
+    const raw = await AsyncStorage.getItem(KEY_LIBERTACOES);
+    const arr: Libertacao[] = raw ? JSON.parse(raw) : [];
+    arr.push(l);
+    await AsyncStorage.setItem(KEY_LIBERTACOES, JSON.stringify(arr));
+  },
+  async getLibertacoes(): Promise<Libertacao[]> {
+    const raw = await AsyncStorage.getItem(KEY_LIBERTACOES);
+    return raw ? JSON.parse(raw) : [];
+  },
+  async toggleOculto(id: string) {
+    const raw = await AsyncStorage.getItem(KEY_OCULTOS);
+    const arr: string[] = raw ? JSON.parse(raw) : [];
+    const idx = arr.indexOf(id);
+    if (idx >= 0) arr.splice(idx, 1);
+    else arr.push(id);
+    await AsyncStorage.setItem(KEY_OCULTOS, JSON.stringify(arr));
+    return arr;
+  },
+  async getOcultos(): Promise<string[]> {
+    const raw = await AsyncStorage.getItem(KEY_OCULTOS);
+    return raw ? JSON.parse(raw) : [];
+  },
   async clearAll() {
-    await AsyncStorage.multiRemove([KEY_NOME, KEY_HIST, KEY_UNLOCK, KEY_ULTIMO]);
+    await AsyncStorage.multiRemove([
+      KEY_NOME,
+      KEY_HIST,
+      KEY_UNLOCK,
+      KEY_ULTIMO,
+      KEY_PROTO_INICIO,
+      KEY_PROTO_DIAS,
+      KEY_LIBERTACOES,
+      KEY_OCULTOS,
+    ]);
   },
 };
