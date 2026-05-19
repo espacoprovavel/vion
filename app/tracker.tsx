@@ -13,6 +13,7 @@ import Svg, { Circle, Defs, LinearGradient as SvgGradient, Line, Path, Stop } fr
 import CosmicBackground from '@/components/CosmicBackground';
 import GradientButton from '@/components/GradientButton';
 import FadeIn from '@/components/FadeIn';
+import BottomNav from '@/components/BottomNav';
 import { Storage, type TestEntry } from '@/lib/storage';
 import { cores, fontes } from '@/constants/colors';
 import { getNivelMaisProximo } from '@/constants/niveis';
@@ -137,6 +138,7 @@ export default function Tracker() {
             </>
           )}
         </ScrollView>
+        <BottomNav active="eu" />
       </SafeAreaView>
     </CosmicBackground>
   );

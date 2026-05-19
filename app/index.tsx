@@ -54,6 +54,12 @@ export default function Landing() {
                 variant="secondary"
                 onPress={() => router.push('/escala')}
               />
+              <View style={{ height: 12 }} />
+              <GradientButton
+                label="Explorar Arquétipos"
+                variant="secondary"
+                onPress={() => router.push('/arquetipos')}
+              />
             </View>
           </FadeIn>
 

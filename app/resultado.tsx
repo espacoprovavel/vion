@@ -166,6 +166,11 @@ export default function Resultado() {
                 variant="secondary"
                 onPress={partilhar}
               />
+              <View style={{ height: 12 }} />
+              <GradientButton
+                label="Ver Arquétipos Alinhados"
+                onPress={() => router.push('/alinhados')}
+              />
               <Pressable onPress={() => router.replace('/teste')} style={{ marginTop: 18 }}>
                 <Text style={styles.refazer}>Refazer o teste</Text>
               </Pressable>
