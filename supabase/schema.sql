@@ -1,5 +1,5 @@
 -- ─────────────────────────────────────────────────────────────────
--- VION · Schema base
+-- VION · Schema base (idempotente — seguro para correr várias vezes)
 -- Cola este SQL no Supabase: Project → SQL Editor → New query
 -- ─────────────────────────────────────────────────────────────────
 
@@ -46,7 +46,7 @@ create table if not exists public.compras (
   user_id uuid references auth.users(id) on delete cascade,
   produto text,
   valor_cents int,
-  fonte text, -- 'stripe' | 'revenuecat' | 'dev'
+  fonte text,
   criado_em timestamptz default now()
 );
 
@@ -59,23 +59,26 @@ alter table public.libertacoes enable row level security;
 alter table public.protocolo   enable row level security;
 alter table public.compras     enable row level security;
 
--- profiles: o utilizador lê/escreve apenas o seu
+-- Apaga políticas antigas se existirem (para podermos recriar limpo)
+drop policy if exists "profiles_self"     on public.profiles;
+drop policy if exists "testes_self"       on public.testes;
+drop policy if exists "libertacoes_self"  on public.libertacoes;
+drop policy if exists "protocolo_self"    on public.protocolo;
+drop policy if exists "compras_self_read" on public.compras;
+
+-- Recria políticas: cada utilizador acede apenas aos seus próprios dados
 create policy "profiles_self" on public.profiles
   for all using (auth.uid() = id) with check (auth.uid() = id);
 
--- testes
 create policy "testes_self" on public.testes
   for all using (auth.uid() = user_id) with check (auth.uid() = user_id);
 
--- libertações
 create policy "libertacoes_self" on public.libertacoes
   for all using (auth.uid() = user_id) with check (auth.uid() = user_id);
 
--- protocolo
 create policy "protocolo_self" on public.protocolo
   for all using (auth.uid() = user_id) with check (auth.uid() = user_id);
 
--- compras (só leitura ao próprio; escrita via service role)
 create policy "compras_self_read" on public.compras
   for select using (auth.uid() = user_id);
 
