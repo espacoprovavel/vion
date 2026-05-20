@@ -2,15 +2,18 @@ import * as Notifications from 'expo-notifications';
 import * as Device from 'expo-device';
 import { Platform } from 'react-native';
 
-Notifications.setNotificationHandler({
-  handleNotification: async () => ({
-    shouldShowAlert: true,
-    shouldPlaySound: false,
-    shouldSetBadge: false,
-  }),
-});
+if (Platform.OS !== 'web') {
+  Notifications.setNotificationHandler({
+    handleNotification: async () => ({
+      shouldShowAlert: true,
+      shouldPlaySound: false,
+      shouldSetBadge: false,
+    }),
+  });
+}
 
 export async function ensurePermissions(): Promise<boolean> {
+  if (Platform.OS === 'web') return false;
   if (!Device.isDevice) return false;
   const { status: existing } = await Notifications.getPermissionsAsync();
   let status = existing;
@@ -29,6 +32,7 @@ export async function ensurePermissions(): Promise<boolean> {
 }
 
 export async function agendarLembreteSemanal() {
+  if (Platform.OS === 'web') return;
   const ok = await ensurePermissions();
   if (!ok) return;
   await Notifications.cancelAllScheduledNotificationsAsync();
@@ -38,7 +42,7 @@ export async function agendarLembreteSemanal() {
       body: 'Uma nova semana, uma nova leitura. Reflecte por 5 minutos.',
     },
     trigger: {
-      weekday: 2, // segunda-feira (1=domingo, 2=segunda)
+      weekday: 2,
       hour: 9,
       minute: 0,
       repeats: true,

@@ -28,6 +28,7 @@
     },
     "web": {
       "bundler": "metro",
+      "output": "single-page",
       "favicon": "./assets/favicon.png"
     },
     "plugins": [

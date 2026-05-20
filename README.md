@@ -2,6 +2,16 @@
 
 App mobile de autoconhecimento vibracional baseada na Escala de Hawkins (17 níveis, 20Hz–700Hz). Quiz de 24 perguntas → mapeamento de frequência → guia de elevação personalizado.
 
+## 🚀 Deploy num clique (web)
+
+[![Deploy com Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fespacoprovavel%2Fvion&env=EXPO_PUBLIC_SUPABASE_URL,EXPO_PUBLIC_SUPABASE_ANON_KEY&envDescription=Chaves%20do%20teu%20projeto%20Supabase%20(Project%20URL%20%2B%20chave%20public%C3%A1vel)&envLink=https%3A%2F%2Fsupabase.com%2Fdashboard&project-name=vion-vibracional&repository-name=vion)
+
+1. Clica no botão acima
+2. Liga ao GitHub (autoriza o Vercel)
+3. Quando pedir a branch, escolhe `claude/build-vion-app-jHdyQ`
+4. Cola as duas variáveis do Supabase (URL + chave publicável)
+5. Clica em **Deploy** → ~2 min depois tens um link `https://vion-xxx.vercel.app` público
+
 ## Stack
 
 - React Native + Expo (SDK 51) + Expo Router (file-based)
