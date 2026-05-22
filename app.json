@@ -29,7 +29,13 @@
     "web": {
       "bundler": "metro",
       "output": "single-page",
-      "favicon": "./assets/favicon.png"
+      "favicon": "./assets/favicon.png",
+      "name": "VION Vibracional",
+      "shortName": "VION",
+      "description": "Em que frequência vibras? Mapeia o teu nível de consciência.",
+      "themeColor": "#7C5CFC",
+      "backgroundColor": "#030308",
+      "lang": "pt-PT"
     },
     "plugins": [
       "expo-router",

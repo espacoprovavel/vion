@@ -1,0 +1,33 @@
+{
+  "name": "VION Vibracional",
+  "short_name": "VION",
+  "description": "Em que frequência vibras? Mapeia o teu nível de consciência em 24 situações reais.",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#030308",
+  "theme_color": "#7C5CFC",
+  "lang": "pt-PT",
+  "categories": ["lifestyle", "health", "education"],
+  "icons": [
+    {
+      "src": "/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/icon-maskable.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ]
+}
