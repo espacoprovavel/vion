@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { useRouter } from 'expo-router';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -7,10 +7,21 @@ import GradientButton from '@/components/GradientButton';
 import FadeIn from '@/components/FadeIn';
 import { useSession } from '@/hooks/useSession';
 import { cores, fontes } from '@/constants/colors';
+import { Storage } from '@/lib/storage';
 
 export default function Landing() {
   const router = useRouter();
   const { autenticado, nome } = useSession();
+  const [pronto, setPronto] = useState(false);
+
+  useEffect(() => {
+    Storage.getOnboardingFeito().then((feito) => {
+      if (!feito) router.replace('/onboarding');
+      else setPronto(true);
+    });
+  }, [router]);
+
+  if (!pronto) return <CosmicBackground particles={20} />;
 
   return (
     <CosmicBackground particles={80}>

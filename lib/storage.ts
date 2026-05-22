@@ -8,6 +8,7 @@ const KEY_PROTO_INICIO = 'vion:protocolo-inicio';
 const KEY_PROTO_DIAS = 'vion:protocolo-dias';
 const KEY_LIBERTACOES = 'vion:libertacoes';
 const KEY_OCULTOS = 'vion:ocultos';
+const KEY_ONBOARDING = 'vion:onboarding-feito';
 
 export type TestEntry = {
   hz: number;
@@ -99,6 +100,13 @@ export const Storage = {
   async getOcultos(): Promise<string[]> {
     const raw = await AsyncStorage.getItem(KEY_OCULTOS);
     return raw ? JSON.parse(raw) : [];
+  },
+  async getOnboardingFeito(): Promise<boolean> {
+    const v = await AsyncStorage.getItem(KEY_ONBOARDING);
+    return v === '1';
+  },
+  async setOnboardingFeito() {
+    await AsyncStorage.setItem(KEY_ONBOARDING, '1');
   },
   async clearAll() {
     await AsyncStorage.multiRemove([
