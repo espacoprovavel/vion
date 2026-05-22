@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import type { Session } from '@supabase/supabase-js';
 import { Auth } from '@/lib/auth';
+import { hidratarDoCloud, limparHidratacao } from '@/lib/hydrate';
 
 export function useSession() {
   const [session, setSession] = useState<Session | null>(null);
@@ -10,8 +11,13 @@ export function useSession() {
     Auth.sessao().then((s) => {
       setSession(s);
       setLoading(false);
+      if (s?.user?.id) hidratarDoCloud(s.user.id);
     });
-    const sub = Auth.onSessionChange((s) => setSession(s));
+    const sub = Auth.onSessionChange((s) => {
+      setSession(s);
+      if (s?.user?.id) hidratarDoCloud(s.user.id);
+      else limparHidratacao();
+    });
     return () => sub.unsubscribe?.();
   }, []);
 

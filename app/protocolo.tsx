@@ -9,6 +9,7 @@ import GradientButton from '@/components/GradientButton';
 import { PROTOCOLO_21, getProgressoDia } from '@/constants/protocolo';
 import { cores, fontes } from '@/constants/colors';
 import { Storage } from '@/lib/storage';
+import { Sync } from '@/lib/sync';
 
 export default function Protocolo() {
   const router = useRouter();
@@ -32,7 +33,7 @@ export default function Protocolo() {
   const diaActual = getProgressoDia(inicio);
 
   const iniciar = async () => {
-    await Storage.iniciarProtocolo();
+    await Sync.iniciarProtocolo();
     Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success).catch(() => {});
     carregar();
   };
@@ -47,7 +48,7 @@ export default function Protocolo() {
           text: 'Reiniciar',
           style: 'destructive',
           onPress: async () => {
-            await Storage.resetProtocolo();
+            await Sync.resetProtocolo();
             carregar();
           },
         },
@@ -57,7 +58,7 @@ export default function Protocolo() {
 
   const marcar = async (n: number) => {
     Haptics.selectionAsync().catch(() => {});
-    await Storage.marcarDia(n);
+    await Sync.marcarDia(n);
     carregar();
   };
 

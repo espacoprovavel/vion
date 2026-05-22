@@ -16,7 +16,7 @@ import CosmicBackground from '@/components/CosmicBackground';
 import FadeIn from '@/components/FadeIn';
 import GradientButton from '@/components/GradientButton';
 import { cores, fontes } from '@/constants/colors';
-import { Storage } from '@/lib/storage';
+import { Sync } from '@/lib/sync';
 
 type Passo = 0 | 1 | 2 | 3 | 4 | 5 | 6;
 
@@ -63,7 +63,7 @@ export default function Libertacao() {
   };
 
   const finalizar = async () => {
-    await Storage.pushLibertacao({
+    await Sync.pushLibertacao({
       data: new Date().toISOString(),
       alvo: `${tipo}: ${alvo}`,
       intensidadeAntes: intensidade,

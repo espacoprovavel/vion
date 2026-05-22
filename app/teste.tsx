@@ -18,6 +18,7 @@ import { cores, fontes } from '@/constants/colors';
 import { calcularFrequencia } from '@/lib/scoring';
 import { getNivelMaisProximo } from '@/constants/niveis';
 import { Storage } from '@/lib/storage';
+import { Sync } from '@/lib/sync';
 
 type Fase = 'intro' | 'quiz' | 'transicao';
 
@@ -60,11 +61,10 @@ export default function Teste() {
     const nivel = getNivelMaisProximo(hz);
     const nomeLimpo = (nome.trim() || 'tu');
     await Storage.setNome(nomeLimpo);
-    await Storage.pushHistorico({
-      hz,
-      data: new Date().toISOString(),
-      nivelHz: nivel.hz,
-    });
+    await Sync.pushTeste(
+      { hz, data: new Date().toISOString(), nivelHz: nivel.hz },
+      todas,
+    );
     Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success).catch(() => {});
     router.replace({ pathname: '/resultado', params: { hz: String(hz) } });
   };
