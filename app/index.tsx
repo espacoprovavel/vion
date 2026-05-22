@@ -93,6 +93,9 @@ export default function Landing() {
             <Text style={styles.footer}>
               Baseado na Escala de David R. Hawkins · Para reflexão pessoal
             </Text>
+            <Pressable onPress={() => router.push('/privacidade')} hitSlop={8}>
+              <Text style={styles.footerLink}>Privacidade</Text>
+            </Pressable>
           </FadeIn>
         </ScrollView>
       </SafeAreaView>
@@ -198,5 +201,13 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     marginTop: 32,
     letterSpacing: 0.5,
+  },
+  footerLink: {
+    fontFamily: fontes.corpo,
+    color: cores.muted,
+    fontSize: 11,
+    textAlign: 'center',
+    marginTop: 8,
+    textDecorationLine: 'underline',
   },
 });
