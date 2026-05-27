@@ -15,11 +15,11 @@ export const cores = {
 } as const;
 
 export const fontes = {
-  titulo: 'CormorantGaramond_500Medium',
-  tituloBold: 'CormorantGaramond_700Bold',
+  titulo: 'Fraunces_500Medium',
+  tituloBold: 'Fraunces_600SemiBold',
   corpo: 'DMSans_400Regular',
   corpoMedium: 'DMSans_500Medium',
   corpoBold: 'DMSans_700Bold',
-  mono: 'DMMono_400Regular',
-  monoMedium: 'DMMono_500Medium',
+  mono: 'SpaceGrotesk_400Regular',
+  monoMedium: 'SpaceGrotesk_500Medium',
 } as const;

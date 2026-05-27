@@ -5,18 +5,19 @@ import { StatusBar } from 'expo-status-bar';
 import * as SplashScreen from 'expo-splash-screen';
 import { useFonts } from 'expo-font';
 import {
-  CormorantGaramond_500Medium,
-  CormorantGaramond_700Bold,
-} from '@expo-google-fonts/cormorant-garamond';
+  Fraunces_500Medium,
+  Fraunces_600SemiBold,
+  Fraunces_400Regular,
+} from '@expo-google-fonts/fraunces';
 import {
   DMSans_400Regular,
   DMSans_500Medium,
   DMSans_700Bold,
 } from '@expo-google-fonts/dm-sans';
 import {
-  DMMono_400Regular,
-  DMMono_500Medium,
-} from '@expo-google-fonts/dm-mono';
+  SpaceGrotesk_400Regular,
+  SpaceGrotesk_500Medium,
+} from '@expo-google-fonts/space-grotesk';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import * as SystemUI from 'expo-system-ui';
@@ -29,13 +30,14 @@ SplashScreen.preventAutoHideAsync().catch(() => {});
 
 export default function RootLayout() {
   const [loaded] = useFonts({
-    CormorantGaramond_500Medium,
-    CormorantGaramond_700Bold,
+    Fraunces_400Regular,
+    Fraunces_500Medium,
+    Fraunces_600SemiBold,
     DMSans_400Regular,
     DMSans_500Medium,
     DMSans_700Bold,
-    DMMono_400Regular,
-    DMMono_500Medium,
+    SpaceGrotesk_400Regular,
+    SpaceGrotesk_500Medium,
   });
 
   useEffect(() => {

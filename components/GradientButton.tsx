@@ -68,18 +68,18 @@ export default function GradientButton({
 }
 
 const styles = StyleSheet.create({
-  wrap: { width: '100%' },
+  wrap: { width: '100%', maxWidth: 340, alignSelf: 'center' },
   btn: {
-    paddingVertical: 16,
-    paddingHorizontal: 24,
-    borderRadius: 14,
+    paddingVertical: 13,
+    paddingHorizontal: 22,
+    borderRadius: 999,
     alignItems: 'center',
     justifyContent: 'center',
   },
   label: {
     fontFamily: fontes.corpoMedium,
     color: '#fff',
-    fontSize: 16,
-    letterSpacing: 0.4,
+    fontSize: 14.5,
+    letterSpacing: 0.3,
   },
 });
