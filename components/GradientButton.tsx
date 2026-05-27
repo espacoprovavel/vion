@@ -26,10 +26,10 @@ export default function GradientButton({
 }: Props) {
   const colors: [string, string] =
     variant === 'primary'
-      ? [cores.accent, cores.accentSoft]
+      ? [cores.accent, '#A88BFF']
       : variant === 'gold'
         ? [cores.gold, cores.goldLight]
-        : [cores.card, cores.surface];
+        : [cores.surface, cores.card];
 
   return (
     <Pressable
@@ -57,7 +57,7 @@ export default function GradientButton({
           style={[
             styles.label,
             variant === 'secondary' && { color: cores.text },
-            variant === 'gold' && { color: '#1a1200' },
+            variant === 'gold' && { color: '#fff' },
           ]}
         >
           {label}

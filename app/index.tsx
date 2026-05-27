@@ -137,9 +137,6 @@ const styles = StyleSheet.create({
     fontSize: 56,
     letterSpacing: 8,
     textAlign: 'center',
-    textShadowColor: '#C4963A66',
-    textShadowOffset: { width: 0, height: 0 },
-    textShadowRadius: 14,
   },
   tagline: {
     fontFamily: fontes.mono,

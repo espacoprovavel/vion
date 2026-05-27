@@ -6,7 +6,7 @@
   "scope": "/",
   "display": "standalone",
   "orientation": "portrait",
-  "background_color": "#030308",
+  "background_color": "#FFFFFF",
   "theme_color": "#7C5CFC",
   "lang": "pt-PT",
   "categories": ["lifestyle", "health", "education"],

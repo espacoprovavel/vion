@@ -170,7 +170,7 @@ export default function Teste() {
                     styles.opcao,
                     pressed && {
                       borderColor: cores.accent,
-                      backgroundColor: '#1a1832',
+                      backgroundColor: '#EDE9FE',
                     },
                   ]}
                 >

@@ -41,7 +41,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 12,
     borderTopWidth: 1,
     borderTopColor: cores.border,
-    backgroundColor: '#08081288',
+    backgroundColor: '#FFFFFFE6',
   },
   tab: { flex: 1, alignItems: 'center', paddingVertical: 6 },
   icon: {

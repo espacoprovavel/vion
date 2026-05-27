@@ -111,7 +111,7 @@ export default function Libertacao() {
                         styles.opcao,
                         tipo === t.id && {
                           borderColor: cores.accent,
-                          backgroundColor: '#1a1832',
+                          backgroundColor: '#EDE9FE',
                         },
                       ]}
                     >
@@ -158,7 +158,7 @@ export default function Libertacao() {
                         styles.zona,
                         zona === z && {
                           borderColor: cores.accentSoft,
-                          backgroundColor: '#1a1832',
+                          backgroundColor: '#EDE9FE',
                         },
                       ]}
                     >

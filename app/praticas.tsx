@@ -67,7 +67,7 @@ export default function Praticas() {
                     styles.tab,
                     cat === c.id && {
                       borderColor: cores.accent,
-                      backgroundColor: '#1a1832',
+                      backgroundColor: '#EDE9FE',
                     },
                   ]}
                 >

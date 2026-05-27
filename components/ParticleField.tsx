@@ -24,8 +24,8 @@ function makeParticles(n: number): Particle[] {
   return Array.from({ length: n }).map(() => ({
     x: Math.random() * W,
     y: Math.random() * H,
-    size: Math.random() * 2.4 + 0.6,
-    opacity: Math.random() * 0.6 + 0.2,
+    size: Math.random() * 2.6 + 0.8,
+    opacity: Math.random() * 0.22 + 0.06,
     duration: 2500 + Math.random() * 4000,
     delay: Math.random() * 3000,
   }));
@@ -80,10 +80,6 @@ export default function ParticleField({ count = 60 }: { count?: number }) {
 const styles = StyleSheet.create({
   dot: {
     position: 'absolute',
-    backgroundColor: '#A78BFA',
-    shadowColor: '#7C5CFC',
-    shadowOpacity: 0.9,
-    shadowRadius: 4,
-    shadowOffset: { width: 0, height: 0 },
+    backgroundColor: '#7C5CFC',
   },
 });

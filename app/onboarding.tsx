@@ -122,9 +122,6 @@ const styles = StyleSheet.create({
     fontSize: 64,
     color: cores.gold,
     textAlign: 'center',
-    textShadowColor: '#C4963A66',
-    textShadowOffset: { width: 0, height: 0 },
-    textShadowRadius: 20,
   },
   label: {
     fontFamily: fontes.mono,

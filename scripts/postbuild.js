@@ -50,7 +50,7 @@ const HEAD_BLOCK = `
   <meta name="twitter:image" content="${OG_IMAGE}" />
 
   <style>
-    html, body { background-color: #030308; }
+    html, body { background-color: #FFFFFF; }
     body { -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
   </style>
 `;

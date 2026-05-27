@@ -18,16 +18,16 @@ export default function CosmicBackground({
   return (
     <View style={styles.root}>
       <LinearGradient
-        colors={[cores.bg, '#080614', cores.bg]}
+        colors={['#FBFAFE', '#F3F0FC', '#FBFAFE']}
         style={StyleSheet.absoluteFill}
       />
-      {glow ? (
-        <LinearGradient
-          pointerEvents="none"
-          colors={[`${glow}55`, 'transparent']}
-          style={[StyleSheet.absoluteFill, styles.glow]}
-        />
-      ) : null}
+      <LinearGradient
+        pointerEvents="none"
+        colors={[`${glow ?? cores.accent}1A`, 'transparent']}
+        start={{ x: 0.5, y: 0 }}
+        end={{ x: 0.5, y: 0.7 }}
+        style={StyleSheet.absoluteFill}
+      />
       <ParticleField count={particles} />
       {children}
     </View>
@@ -36,5 +36,4 @@ export default function CosmicBackground({
 
 const styles = StyleSheet.create({
   root: { flex: 1, backgroundColor: cores.bg },
-  glow: { opacity: 0.6 },
 });

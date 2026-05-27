@@ -52,7 +52,7 @@ export default function RootLayout() {
     <ErrorBoundary>
       <GestureHandlerRootView style={{ flex: 1, backgroundColor: cores.bg }}>
         <SafeAreaProvider>
-          <StatusBar style="light" />
+          <StatusBar style="dark" />
           <Stack
             screenOptions={{
               headerShown: false,
