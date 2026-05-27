@@ -9,6 +9,7 @@ const KEY_PROTO_DIAS = 'vion:protocolo-dias';
 const KEY_LIBERTACOES = 'vion:libertacoes';
 const KEY_OCULTOS = 'vion:ocultos';
 const KEY_ONBOARDING = 'vion:onboarding-feito';
+const KEY_SONHOS = 'vion:sonhos';
 
 export type TestEntry = {
   hz: number;
@@ -22,6 +23,14 @@ export type Libertacao = {
   intensidadeAntes: number;
   intensidadeDepois: number;
   sensacao: string;
+};
+
+export type Sonho = {
+  id: string;
+  data: string; // ISO
+  texto: string;
+  humor: string; // emoção ao acordar
+  simbolos: string[]; // ids dos símbolos detetados
 };
 
 export const Storage = {
@@ -108,6 +117,21 @@ export const Storage = {
   async setOnboardingFeito() {
     await AsyncStorage.setItem(KEY_ONBOARDING, '1');
   },
+  async pushSonho(s: Sonho) {
+    const raw = await AsyncStorage.getItem(KEY_SONHOS);
+    const arr: Sonho[] = raw ? JSON.parse(raw) : [];
+    arr.unshift(s);
+    await AsyncStorage.setItem(KEY_SONHOS, JSON.stringify(arr));
+  },
+  async getSonhos(): Promise<Sonho[]> {
+    const raw = await AsyncStorage.getItem(KEY_SONHOS);
+    return raw ? JSON.parse(raw) : [];
+  },
+  async removerSonho(id: string) {
+    const raw = await AsyncStorage.getItem(KEY_SONHOS);
+    const arr: Sonho[] = raw ? JSON.parse(raw) : [];
+    await AsyncStorage.setItem(KEY_SONHOS, JSON.stringify(arr.filter((s) => s.id !== id)));
+  },
   async clearAll() {
     await AsyncStorage.multiRemove([
       KEY_NOME,
@@ -118,6 +142,7 @@ export const Storage = {
       KEY_PROTO_DIAS,
       KEY_LIBERTACOES,
       KEY_OCULTOS,
+      KEY_SONHOS,
     ]);
   },
 };

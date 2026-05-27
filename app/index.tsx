@@ -81,6 +81,12 @@ export default function Landing() {
               />
               <View style={{ height: 12 }} />
               <GradientButton
+                label="Diário de Sonhos"
+                variant="secondary"
+                onPress={() => router.push('/sonhos')}
+              />
+              <View style={{ height: 12 }} />
+              <GradientButton
                 label="Já fiz o teste · Ir para Evolução"
                 variant="secondary"
                 onPress={() => router.push('/evolucao')}
