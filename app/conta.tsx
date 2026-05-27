@@ -8,6 +8,7 @@ import FadeIn from '@/components/FadeIn';
 import { useSession } from '@/hooks/useSession';
 import { Auth } from '@/lib/auth';
 import { Storage, type TestEntry, type Libertacao } from '@/lib/storage';
+import { isAdmin } from '@/lib/admin';
 import { cores, fontes } from '@/constants/colors';
 
 export default function Conta() {
@@ -146,6 +147,13 @@ export default function Conta() {
                 desc="Nova leitura do campo"
                 onPress={() => router.push('/teste')}
               />
+              {isAdmin(email) && (
+                <Botao
+                  titulo="Painel de administração"
+                  desc="Editar o conteúdo da app"
+                  onPress={() => router.push('/admin')}
+                />
+              )}
               <Botao
                 titulo="Apagar dados locais"
                 desc="Limpa este dispositivo"

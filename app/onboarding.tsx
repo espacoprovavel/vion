@@ -7,38 +7,18 @@ import GradientButton from '@/components/GradientButton';
 import FadeIn from '@/components/FadeIn';
 import { cores, fontes } from '@/constants/colors';
 import { Storage } from '@/lib/storage';
-
-type Slide = {
-  emoji: string;
-  label: string;
-  titulo: string;
-  desc: string;
-};
-
-const SLIDES: Slide[] = [
-  {
-    emoji: '✦',
-    label: 'BEM-VINDA',
-    titulo: 'Anos de trabalho.\nEm pouco tempo.',
-    desc: 'A VION condensa décadas de psicologia profunda, espiritualidade e neurociência num caminho prático. Sem rodeios.',
-  },
-  {
-    emoji: '◐',
-    label: 'O MÉTODO',
-    titulo: '17 níveis de\nconsciência.',
-    desc: 'Baseado na escala de David R. Hawkins. Vais mapear exactamente onde estás — e o caminho concreto para o nível seguinte.',
-  },
-  {
-    emoji: '◉',
-    label: 'AVISO',
-    titulo: 'Não é um teste\nde personalidade.',
-    desc: 'É um espelho. Vais ver-te como és — não como te apresentas. Respira fundo. Sê honesta. O que descobrires é só para ti.',
-  },
-];
+import { useConteudo } from '@/lib/conteudo';
 
 export default function Onboarding() {
   const router = useRouter();
+  const { t } = useConteudo();
   const [idx, setIdx] = useState(0);
+
+  const SLIDES = [
+    { emoji: '✦', label: 'BEM-VINDA', titulo: t('onboarding.s1.titulo'), desc: t('onboarding.s1.desc') },
+    { emoji: '◐', label: 'O MÉTODO', titulo: t('onboarding.s2.titulo'), desc: t('onboarding.s2.desc') },
+    { emoji: '◉', label: 'AVISO', titulo: t('onboarding.s3.titulo'), desc: t('onboarding.s3.desc') },
+  ];
   const ultimo = idx === SLIDES.length - 1;
 
   const avancar = async () => {

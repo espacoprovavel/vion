@@ -8,10 +8,12 @@ import FadeIn from '@/components/FadeIn';
 import { useSession } from '@/hooks/useSession';
 import { cores, fontes } from '@/constants/colors';
 import { Storage } from '@/lib/storage';
+import { useConteudo } from '@/lib/conteudo';
 
 export default function Landing() {
   const router = useRouter();
   const { autenticado, nome } = useSession();
+  const { t } = useConteudo();
   const [pronto, setPronto] = useState(false);
 
   useEffect(() => {
@@ -39,16 +41,13 @@ export default function Landing() {
         >
           <FadeIn delay={100}>
             <Text style={styles.logo}>VION</Text>
-            <Text style={styles.tagline}>VIBRACIONAL</Text>
+            <Text style={styles.tagline}>{t('landing.tagline')}</Text>
           </FadeIn>
 
           <FadeIn delay={500}>
             <View style={styles.heroBox}>
-              <Text style={styles.titulo}>Em que frequência{'\n'}vibras?</Text>
-              <Text style={styles.subtitulo}>
-                24 situações reais. Sem respostas certas.{'\n'}O teu padrão revela o teu nível
-                de consciência.
-              </Text>
+              <Text style={styles.titulo}>{t('landing.titulo')}</Text>
+              <Text style={styles.subtitulo}>{t('landing.subtitulo')}</Text>
             </View>
           </FadeIn>
 
@@ -90,9 +89,7 @@ export default function Landing() {
           </FadeIn>
 
           <FadeIn delay={1500}>
-            <Text style={styles.footer}>
-              Baseado na Escala de David R. Hawkins · Para reflexão pessoal
-            </Text>
+            <Text style={styles.footer}>{t('landing.footer')}</Text>
             <Pressable onPress={() => router.push('/privacidade')} hitSlop={8}>
               <Text style={styles.footerLink}>Privacidade</Text>
             </Pressable>

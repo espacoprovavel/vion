@@ -50,6 +50,14 @@ create table if not exists public.compras (
   criado_em timestamptz default now()
 );
 
+-- 6. Conteúdo editável (CMS) — textos, perguntas, níveis, guias
+--    Chave -> valor JSON. Leitura pública; escrita só admin.
+create table if not exists public.conteudo (
+  chave text primary key,
+  valor jsonb,
+  actualizado_em timestamptz default now()
+);
+
 -- ─────────────────────────────────────────────────────────────────
 -- Row Level Security
 -- ─────────────────────────────────────────────────────────────────
@@ -58,13 +66,16 @@ alter table public.testes      enable row level security;
 alter table public.libertacoes enable row level security;
 alter table public.protocolo   enable row level security;
 alter table public.compras     enable row level security;
+alter table public.conteudo    enable row level security;
 
 -- Apaga políticas antigas se existirem (para podermos recriar limpo)
-drop policy if exists "profiles_self"     on public.profiles;
-drop policy if exists "testes_self"       on public.testes;
-drop policy if exists "libertacoes_self"  on public.libertacoes;
-drop policy if exists "protocolo_self"    on public.protocolo;
-drop policy if exists "compras_self_read" on public.compras;
+drop policy if exists "profiles_self"      on public.profiles;
+drop policy if exists "testes_self"        on public.testes;
+drop policy if exists "libertacoes_self"   on public.libertacoes;
+drop policy if exists "protocolo_self"     on public.protocolo;
+drop policy if exists "compras_self_read"  on public.compras;
+drop policy if exists "conteudo_read"      on public.conteudo;
+drop policy if exists "conteudo_admin_write" on public.conteudo;
 
 -- Recria políticas: cada utilizador acede apenas aos seus próprios dados
 create policy "profiles_self" on public.profiles
@@ -81,6 +92,16 @@ create policy "protocolo_self" on public.protocolo
 
 create policy "compras_self_read" on public.compras
   for select using (auth.uid() = user_id);
+
+-- Conteúdo: toda a gente lê (a app precisa); só o admin escreve.
+-- Troca o email abaixo se mudares de administradora.
+create policy "conteudo_read" on public.conteudo
+  for select using (true);
+
+create policy "conteudo_admin_write" on public.conteudo
+  for all
+  using (lower(auth.jwt() ->> 'email') = 'michellerodriguesudi@gmail.com')
+  with check (lower(auth.jwt() ->> 'email') = 'michellerodriguesudi@gmail.com');
 
 -- ─────────────────────────────────────────────────────────────────
 -- Trigger: criar profile automaticamente no signup

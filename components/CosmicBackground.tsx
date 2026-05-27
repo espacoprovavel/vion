@@ -5,7 +5,7 @@ import ParticleField from './ParticleField';
 import { cores } from '@/constants/colors';
 
 type Props = {
-  children: React.ReactNode;
+  children?: React.ReactNode;
   glow?: string;
   particles?: number;
 };

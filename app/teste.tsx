@@ -19,11 +19,13 @@ import { calcularFrequencia } from '@/lib/scoring';
 import { getNivelMaisProximo } from '@/constants/niveis';
 import { Storage } from '@/lib/storage';
 import { Sync } from '@/lib/sync';
+import { useConteudo } from '@/lib/conteudo';
 
 type Fase = 'intro' | 'quiz' | 'transicao';
 
 export default function Teste() {
   const router = useRouter();
+  const { t } = useConteudo();
   const [fase, setFase] = useState<Fase>('intro');
   const [nome, setNome] = useState('');
   const [idx, setIdx] = useState(0);
@@ -75,12 +77,8 @@ export default function Teste() {
         <SafeAreaView style={{ flex: 1 }}>
           <ScrollView contentContainerStyle={styles.introWrap}>
             <FadeIn delay={100}>
-              <Text style={styles.introTit}>Antes de começar</Text>
-              <Text style={styles.introDesc}>
-                Não há respostas certas. Escolhe a opção que mais se aproxima de como{' '}
-                <Text style={{ fontStyle: 'italic' }}>realmente</Text> reages — não como
-                gostarias de reagir.{'\n\n'}24 situações. Cerca de 5 minutos.
-              </Text>
+              <Text style={styles.introTit}>{t('teste.intro.titulo')}</Text>
+              <Text style={styles.introDesc}>{t('teste.intro.desc')}</Text>
             </FadeIn>
             <FadeIn delay={400}>
               <View style={{ marginTop: 36 }}>

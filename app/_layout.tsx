@@ -22,6 +22,7 @@ import { SafeAreaProvider } from 'react-native-safe-area-context';
 import * as SystemUI from 'expo-system-ui';
 import { cores } from '@/constants/colors';
 import { configurar as configurarPagamentos } from '@/lib/payments';
+import { carregarConteudo } from '@/lib/conteudo';
 import ErrorBoundary from '@/components/ErrorBoundary';
 
 SplashScreen.preventAutoHideAsync().catch(() => {});
@@ -40,6 +41,7 @@ export default function RootLayout() {
   useEffect(() => {
     SystemUI.setBackgroundColorAsync(cores.bg).catch(() => {});
     configurarPagamentos().catch(() => {});
+    carregarConteudo().catch(() => {});
   }, []);
 
   useEffect(() => {
