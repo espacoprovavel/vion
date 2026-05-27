@@ -75,9 +75,9 @@ export default function Landing() {
               />
               <View style={{ height: 12 }} />
               <GradientButton
-                label="Explorar Arquétipos"
+                label="Mapa de Arquétipos · Jung & Tarot"
                 variant="secondary"
-                onPress={() => router.push('/arquetipos')}
+                onPress={() => router.push('/jung')}
               />
               <View style={{ height: 12 }} />
               <GradientButton
