@@ -4,6 +4,7 @@ import { useRouter } from 'expo-router';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import CosmicBackground from '@/components/CosmicBackground';
 import FadeIn from '@/components/FadeIn';
+import BottomNav from '@/components/BottomNav';
 import { NIVEIS } from '@/constants/niveis';
 import { cores, fontes } from '@/constants/colors';
 
@@ -73,6 +74,7 @@ export default function Escala() {
             </View>
           </FadeIn>
         </ScrollView>
+        <BottomNav active="explorar" />
       </SafeAreaView>
     </CosmicBackground>
   );

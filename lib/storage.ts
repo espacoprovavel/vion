@@ -1,4 +1,9 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { supabase } from './supabase';
+
+// HYDRATED_KEY vive aqui (em vez de em hydrate.ts) para o clearAll poder
+// limpar a marca de hidratação sem criar um ciclo storage ↔ hydrate.
+const KEY_HYDRATED = 'vion:hydrated-uid';
 
 const KEY_NOME = 'vion:nome';
 const KEY_HIST = 'vion:historico';
@@ -143,6 +148,10 @@ export const Storage = {
       KEY_LIBERTACOES,
       KEY_OCULTOS,
       KEY_SONHOS,
+      KEY_HYDRATED,
     ]);
+    if (supabase) {
+      await supabase.auth.signOut().catch(() => {});
+    }
   },
 };

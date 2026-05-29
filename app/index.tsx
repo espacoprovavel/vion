@@ -5,6 +5,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import CosmicBackground from '@/components/CosmicBackground';
 import GradientButton from '@/components/GradientButton';
 import FadeIn from '@/components/FadeIn';
+import BottomNav from '@/components/BottomNav';
 import { useSession } from '@/hooks/useSession';
 import { cores, fontes } from '@/constants/colors';
 import { Storage } from '@/lib/storage';
@@ -75,18 +76,6 @@ export default function Landing() {
               />
               <View style={{ height: 12 }} />
               <GradientButton
-                label="Mapa de Arquétipos · Jung & Tarot"
-                variant="secondary"
-                onPress={() => router.push('/jung')}
-              />
-              <View style={{ height: 12 }} />
-              <GradientButton
-                label="Diário de Sonhos"
-                variant="secondary"
-                onPress={() => router.push('/sonhos')}
-              />
-              <View style={{ height: 12 }} />
-              <GradientButton
                 label="Já fiz o teste · Ir para Evolução"
                 variant="secondary"
                 onPress={() => router.push('/evolucao')}
@@ -101,6 +90,7 @@ export default function Landing() {
             </Pressable>
           </FadeIn>
         </ScrollView>
+        <BottomNav active="inicio" />
       </SafeAreaView>
     </CosmicBackground>
   );

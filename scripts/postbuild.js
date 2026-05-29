@@ -14,7 +14,9 @@ if (!fs.existsSync(INDEX)) {
 const TITLE = 'VION Vibracional — Em que frequência vibras?';
 const DESCRIPTION =
   'Mapeia o teu nível de consciência em 24 situações reais. 17 níveis baseados na escala de Hawkins. Para reflexão pessoal.';
-const URL = 'https://vion.vercel.app';
+// URL pública do site. Configurável via EXPO_PUBLIC_SITE_URL (ex.: quando vion.pt estiver pronto,
+// basta definir a env no Vercel). Fallback aponta para o domínio real de produção.
+const URL = process.env.EXPO_PUBLIC_SITE_URL || 'https://vion-three.vercel.app';
 const OG_IMAGE = `${URL}/og-image.png`;
 
 const HEAD_BLOCK = `

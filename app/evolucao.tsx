@@ -53,7 +53,7 @@ export default function Evolucao() {
             <View style={{ height: 20 }} />
             <GradientButton label="Fazer o Mapeamento" onPress={() => router.push('/teste')} />
           </View>
-          <BottomNav active="eu" />
+          <BottomNav active="evolucao" />
         </SafeAreaView>
       </CosmicBackground>
     );
@@ -181,7 +181,7 @@ export default function Evolucao() {
             />
           </FadeIn>
         </ScrollView>
-        <BottomNav active="eu" />
+        <BottomNav active="evolucao" />
       </SafeAreaView>
     </CosmicBackground>
   );

@@ -14,6 +14,7 @@ import GradientButton from '@/components/GradientButton';
 import FadeIn from '@/components/FadeIn';
 import AnimatedRing from '@/components/AnimatedRing';
 import BarraEscala from '@/components/BarraEscala';
+import BottomNav from '@/components/BottomNav';
 import {
   getNivelMaisProximo,
   getNivelAcima,
@@ -180,6 +181,7 @@ export default function Resultado() {
             </View>
           </FadeIn>
         </ScrollView>
+        <BottomNav active="evolucao" />
       </SafeAreaView>
     </CosmicBackground>
   );

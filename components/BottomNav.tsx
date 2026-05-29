@@ -3,12 +3,14 @@ import { Pressable, StyleSheet, Text, View } from 'react-native';
 import { useRouter } from 'expo-router';
 import { cores, fontes } from '@/constants/colors';
 
-type Tab = 'arquetipos' | 'alinhados' | 'eu';
+export type Tab = 'inicio' | 'teste' | 'evolucao' | 'explorar' | 'perfil';
 
 const TABS: { id: Tab; icon: string; label: string; href: any }[] = [
-  { id: 'arquetipos', icon: '✦', label: 'Arquétipos', href: '/arquetipos' },
-  { id: 'alinhados', icon: '○', label: 'Alinhados', href: '/alinhados' },
-  { id: 'eu', icon: '◐', label: 'Evolução', href: '/evolucao' },
+  { id: 'inicio',   icon: '◐', label: 'Início',    href: '/' },
+  { id: 'teste',    icon: '✦', label: 'Teste',     href: '/teste' },
+  { id: 'evolucao', icon: '○', label: 'Evolução',  href: '/evolucao' },
+  { id: 'explorar', icon: '✺', label: 'Explorar',  href: '/explorar' },
+  { id: 'perfil',   icon: '☉', label: 'Perfil',    href: '/perfil' },
 ];
 
 export default function BottomNav({ active }: { active: Tab }) {
@@ -22,6 +24,7 @@ export default function BottomNav({ active }: { active: Tab }) {
             key={t.id}
             onPress={() => router.push(t.href)}
             style={styles.tab}
+            hitSlop={6}
           >
             <Text style={[styles.icon, on && { color: cores.accentSoft }]}>
               {t.icon}
@@ -37,8 +40,8 @@ export default function BottomNav({ active }: { active: Tab }) {
 const styles = StyleSheet.create({
   wrap: {
     flexDirection: 'row',
-    paddingVertical: 12,
-    paddingHorizontal: 12,
+    paddingVertical: 10,
+    paddingHorizontal: 8,
     borderTopWidth: 1,
     borderTopColor: cores.border,
     backgroundColor: '#FFFFFFE6',
@@ -46,13 +49,13 @@ const styles = StyleSheet.create({
   tab: { flex: 1, alignItems: 'center', paddingVertical: 6 },
   icon: {
     color: cores.muted,
-    fontSize: 22,
+    fontSize: 20,
     marginBottom: 2,
   },
   label: {
     fontFamily: fontes.mono,
     color: cores.muted,
     fontSize: 10,
-    letterSpacing: 1.5,
+    letterSpacing: 1.2,
   },
 });

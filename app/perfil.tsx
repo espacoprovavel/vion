@@ -13,6 +13,7 @@ import CosmicBackground from '@/components/CosmicBackground';
 import FadeIn from '@/components/FadeIn';
 import AvatarOrb from '@/components/AvatarOrb';
 import GradientButton from '@/components/GradientButton';
+import BottomNav from '@/components/BottomNav';
 import { ARQUETIPOS, type Arquetipo } from '@/constants/arquetipos';
 import { NIVEIS, getNivelMaisProximo } from '@/constants/niveis';
 import { cores, fontes } from '@/constants/colors';
@@ -165,6 +166,7 @@ export default function Perfil() {
             </View>
           </FadeIn>
         </ScrollView>
+        <BottomNav active="perfil" />
       </SafeAreaView>
     </CosmicBackground>
   );

@@ -377,7 +377,7 @@ function Linha({ label, valor, cor }: { label: string; valor: string; cor?: stri
   return (
     <View style={styles.linha}>
       <Text style={styles.linhaLabel}>{label}</Text>
-      <Text style={[styles.linhaValor, cor && { color: cor }]}>{valor}</Text>
+      <Text style={[styles.linhaValor, cor ? { color: cor } : null]}>{valor}</Text>
     </View>
   );
 }

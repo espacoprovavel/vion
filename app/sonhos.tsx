@@ -12,6 +12,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import CosmicBackground from '@/components/CosmicBackground';
 import FadeIn from '@/components/FadeIn';
 import GradientButton from '@/components/GradientButton';
+import BottomNav from '@/components/BottomNav';
 import { cores, fontes } from '@/constants/colors';
 import { analisarSonho, HUMORES, type AnaliseSonho } from '@/constants/sonhos';
 import { Storage, type Sonho } from '@/lib/storage';
@@ -180,6 +181,7 @@ export default function Sonhos() {
 
           <View style={{ height: 30 }} />
         </ScrollView>
+        <BottomNav active="explorar" />
       </SafeAreaView>
     </CosmicBackground>
   );

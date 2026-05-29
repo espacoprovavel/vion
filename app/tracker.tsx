@@ -138,7 +138,7 @@ export default function Tracker() {
             </>
           )}
         </ScrollView>
-        <BottomNav active="eu" />
+        <BottomNav active="evolucao" />
       </SafeAreaView>
     </CosmicBackground>
   );
@@ -148,7 +148,7 @@ function KV({ label, valor, cor }: { label: string; valor: string; cor?: string 
   return (
     <View style={styles.kv}>
       <Text style={styles.kvLabel}>{label}</Text>
-      <Text style={[styles.kvValor, cor && { color: cor }]}>{valor}</Text>
+      <Text style={[styles.kvValor, cor ? { color: cor } : null]}>{valor}</Text>
     </View>
   );
 }

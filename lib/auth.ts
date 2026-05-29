@@ -1,4 +1,6 @@
+import { Platform } from 'react-native';
 import { supabase, supabaseEnabled } from './supabase';
+import { SITE_URL } from './config';
 import type { Session, User } from '@supabase/supabase-js';
 
 export type AuthResult = {
@@ -69,8 +71,12 @@ export const Auth = {
 
   async recuperar(email: string): Promise<AuthResult> {
     if (!supabase) return { ok: false, erro: 'Auth não configurada.' };
+    // No web manda o utilizador para uma URL https abrível no browser; no mobile
+    // mantém o deep link nativo `vion://`.
+    const redirectTo =
+      Platform.OS === 'web' ? `${SITE_URL}/auth/recuperar` : 'vion://recuperar';
     const { error } = await supabase.auth.resetPasswordForEmail(email.trim().toLowerCase(), {
-      redirectTo: 'vion://recuperar',
+      redirectTo,
     });
     if (error) return { ok: false, erro: traduzErro(error.message) };
     return { ok: true };

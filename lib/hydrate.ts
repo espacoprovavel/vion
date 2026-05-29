@@ -6,6 +6,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { supabase } from './supabase';
 import { Storage, type Libertacao, type TestEntry } from './storage';
 
+// Mesma chave usada por Storage.clearAll — mantemos sincronizado.
 const HYDRATED_KEY = 'vion:hydrated-uid';
 
 export async function hidratarDoCloud(uid: string): Promise<void> {

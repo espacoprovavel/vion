@@ -12,6 +12,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import CosmicBackground from '@/components/CosmicBackground';
 import CartaTarot from '@/components/CartaTarot';
 import FadeIn from '@/components/FadeIn';
+import BottomNav from '@/components/BottomNav';
 import { ARQUETIPOS_12, FUNDAMENTAIS_4, type CartaJung } from '@/constants/jung';
 import { cores, fontes } from '@/constants/colors';
 
@@ -66,6 +67,7 @@ export default function Jung() {
 
           <View style={{ height: 30 }} />
         </ScrollView>
+        <BottomNav active="explorar" />
       </SafeAreaView>
 
       <Modal visible={!!sel} animationType="slide" transparent onRequestClose={() => setSel(null)}>

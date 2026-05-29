@@ -5,9 +5,8 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import CosmicBackground from '@/components/CosmicBackground';
 import FadeIn from '@/components/FadeIn';
 import AvatarOrb from '@/components/AvatarOrb';
-import BottomNav from '@/components/BottomNav';
 import GradientButton from '@/components/GradientButton';
-import { ARQUETIPOS, getArquetipoPorHz, getArquetiposAfins } from '@/constants/arquetipos';
+import { getArquetipoPorHz, getArquetiposAfins } from '@/constants/arquetipos';
 import { NIVEIS } from '@/constants/niveis';
 import { cores, fontes } from '@/constants/colors';
 import { Storage, type TestEntry } from '@/lib/storage';
@@ -42,7 +41,6 @@ export default function Alinhados() {
             <View style={{ height: 20 }} />
             <GradientButton label="Iniciar Mapeamento" onPress={() => router.push('/teste')} />
           </View>
-          <BottomNav active="alinhados" />
         </SafeAreaView>
       </CosmicBackground>
     );
@@ -122,8 +120,6 @@ export default function Alinhados() {
             </FadeIn>
           )}
         </ScrollView>
-
-        <BottomNav active="alinhados" />
       </SafeAreaView>
     </CosmicBackground>
   );
