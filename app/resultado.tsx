@@ -23,6 +23,7 @@ import {
 } from '@/constants/niveis';
 import { cores, fontes } from '@/constants/colors';
 import { Storage } from '@/lib/storage';
+import { SITE_URL } from '@/lib/config';
 import { track, EVENTOS } from '@/lib/analytics';
 
 export default function Resultado() {
@@ -45,9 +46,9 @@ export default function Resultado() {
 
   const partilhar = () => {
     track(EVENTOS.PARTILHA_CLICADA, { hz, nivel: nivel.nome });
-    Share.share({
-      message: `A minha frequência vibracional: ${hz}Hz — ${nivel.nome}. Descobre a tua em VION.`,
-    }).catch(() => {});
+    const url = `${SITE_URL}/resultado?hz=${hz}`;
+    const message = `A minha frequência vibracional: ${hz}Hz — ${nivel.nome}.\nDescobre a tua em VION: ${url}`;
+    Share.share({ message, url }).catch(() => {});
   };
 
   return (

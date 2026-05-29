@@ -18,6 +18,7 @@ import { ARQUETIPOS, type Arquetipo } from '@/constants/arquetipos';
 import { NIVEIS, getNivelMaisProximo } from '@/constants/niveis';
 import { cores, fontes } from '@/constants/colors';
 import { Storage, type TestEntry } from '@/lib/storage';
+import { SITE_URL } from '@/lib/config';
 
 export default function Perfil() {
   const router = useRouter();
@@ -36,9 +37,9 @@ export default function Perfil() {
   const compatibilidade = ultimo ? calcularCompat(ultimo.hz, arq.hz) : null;
 
   const partilhar = () => {
-    Share.share({
-      message: `Acabei de encontrar o arquétipo "${arq.nome}" em VION — vibra a ${arq.hz}Hz. ${arq.bio}`,
-    }).catch(() => {});
+    const url = `${SITE_URL}/jung`;
+    const message = `Acabei de encontrar o arquétipo "${arq.nome}" em VION — vibra a ${arq.hz}Hz. ${arq.bio}\n${url}`;
+    Share.share({ message, url }).catch(() => {});
   };
 
   return (
