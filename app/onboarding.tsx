@@ -8,6 +8,7 @@ import FadeIn from '@/components/FadeIn';
 import { cores, fontes } from '@/constants/colors';
 import { Storage } from '@/lib/storage';
 import { useConteudo } from '@/lib/conteudo';
+import { track, EVENTOS } from '@/lib/analytics';
 
 export default function Onboarding() {
   const router = useRouter();
@@ -24,6 +25,7 @@ export default function Onboarding() {
   const avancar = async () => {
     if (ultimo) {
       await Storage.setOnboardingFeito();
+      track(EVENTOS.ONBOARDING_COMPLETO, { saltou: false });
       router.replace('/');
       return;
     }
@@ -32,6 +34,7 @@ export default function Onboarding() {
 
   const saltar = async () => {
     await Storage.setOnboardingFeito();
+    track(EVENTOS.ONBOARDING_COMPLETO, { saltou: true });
     router.replace('/');
   };
 

@@ -20,6 +20,7 @@ import { getNivelMaisProximo } from '@/constants/niveis';
 import { Storage } from '@/lib/storage';
 import { Sync } from '@/lib/sync';
 import { useConteudo } from '@/lib/conteudo';
+import { track, EVENTOS } from '@/lib/analytics';
 
 type Fase = 'intro' | 'quiz' | 'transicao';
 
@@ -40,6 +41,7 @@ export default function Teste() {
     Haptics.selectionAsync().catch(() => {});
     const novas = [...respostas, hz];
     setRespostas(novas);
+    track(EVENTOS.TESTE_PERGUNTA_RESPONDIDA, { pergunta: idx + 1, hz });
     if (idx === 11) {
       setFase('transicao');
       return;
@@ -67,6 +69,7 @@ export default function Teste() {
       { hz, data: new Date().toISOString(), nivelHz: nivel.hz },
       todas,
     );
+    track(EVENTOS.TESTE_COMPLETO, { hz, nivel: nivel.nome, nivel_hz: nivel.hz });
     Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success).catch(() => {});
     router.replace({ pathname: '/resultado', params: { hz: String(hz) } });
   };
@@ -96,7 +99,13 @@ export default function Teste() {
             </FadeIn>
             <FadeIn delay={700}>
               <View style={{ marginTop: 40 }}>
-                <GradientButton label="Começar" onPress={() => setFase('quiz')} />
+                <GradientButton
+                  label="Começar"
+                  onPress={() => {
+                    track(EVENTOS.TESTE_INICIADO);
+                    setFase('quiz');
+                  }}
+                />
                 <Pressable onPress={() => router.back()} style={{ marginTop: 16 }}>
                   <Text style={styles.voltar}>cancelar</Text>
                 </Pressable>

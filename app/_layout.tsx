@@ -24,6 +24,7 @@ import * as SystemUI from 'expo-system-ui';
 import { cores } from '@/constants/colors';
 import { configurar as configurarPagamentos } from '@/lib/payments';
 import { carregarConteudo } from '@/lib/conteudo';
+import { initAnalytics, track, EVENTOS } from '@/lib/analytics';
 import ErrorBoundary from '@/components/ErrorBoundary';
 
 SplashScreen.preventAutoHideAsync().catch(() => {});
@@ -44,6 +45,8 @@ export default function RootLayout() {
     SystemUI.setBackgroundColorAsync(cores.bg).catch(() => {});
     configurarPagamentos().catch(() => {});
     carregarConteudo().catch(() => {});
+    initAnalytics();
+    track(EVENTOS.APP_ABERTO);
   }, []);
 
   useEffect(() => {

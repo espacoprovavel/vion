@@ -35,10 +35,13 @@ Sem chaves preenchidas a app corre em **modo dev** — o desbloqueio do guia pre
 
 | Var | Função |
 |---|---|
+| `EXPO_PUBLIC_SITE_URL` | URL pública do site (default `https://vion-three.vercel.app`). Usada nas OG tags e redirect de recuperar palavra-passe. |
 | `EXPO_PUBLIC_SUPABASE_URL` | URL Supabase (opcional) |
 | `EXPO_PUBLIC_SUPABASE_ANON_KEY` | Anon key Supabase (opcional) |
-| `EXPO_PUBLIC_REVENUECAT_IOS_KEY` | RevenueCat iOS |
-| `EXPO_PUBLIC_REVENUECAT_ANDROID_KEY` | RevenueCat Android |
+| `EXPO_PUBLIC_POSTHOG_KEY` | Chave PostHog (opcional). Sem chave, analytics fica em no-op. |
+| `EXPO_PUBLIC_POSTHOG_HOST` | Host PostHog (default `https://eu.i.posthog.com`). |
+| `EXPO_PUBLIC_REVENUECAT_IOS_KEY` | RevenueCat iOS (futuro) |
+| `EXPO_PUBLIC_REVENUECAT_ANDROID_KEY` | RevenueCat Android (futuro) |
 
 ## Estrutura
 
@@ -95,3 +98,36 @@ A Stripe está conectada via RevenueCat → App Store / Play Store. Sem chaves R
 ## Notificações
 
 Lembrete semanal automaticamente agendado às segundas 09:00 (após permissão).
+
+## Analytics
+
+PostHog (web) com no-op silencioso no mobile e quando não há chave. Wrapper em `lib/analytics.ts`.
+
+### Eventos registados
+
+| Evento | Propriedades | Quando dispara |
+|---|---|---|
+| `app_aberto` | — | Ao carregar a app |
+| `onboarding_completo` | `saltou` (bool) | Fim do onboarding (concluído ou saltado) |
+| `teste_iniciado` | — | Botão "Começar" antes das 24 perguntas |
+| `teste_pergunta_respondida` | `pergunta`, `hz` | Cada resposta do teste |
+| `teste_completo` | `hz`, `nivel`, `nivel_hz` | Cálculo final do teste |
+| `resultado_visto` | `hz`, `nivel`, `nivel_hz` | Abertura do ecrã `/resultado` |
+| `partilha_clicada` | `hz`, `nivel` | Botão de partilhar resultado |
+| `guia_cta_clicado` | `hz`, `nivel`, `origem` | Clique no CTA do guia/elevação |
+| `checkout_iniciado` | `produto`, `preco_cents` | Início do fluxo de compra |
+| `compra_completa` | `produto`, `valor_cents` | Compra confirmada (hoje via stub; Sprint 3 via webhook Stripe) |
+
+### Funil principal
+
+```
+app_aberto
+  → teste_iniciado
+    → teste_completo
+      → resultado_visto
+        → guia_cta_clicado
+          → checkout_iniciado
+            → compra_completa
+```
+
+Métricas-chave que este funil permite responder: taxa de conclusão do teste, % de utilizadores que veem o guia depois do resultado, taxa de checkout e taxa de conversão para compra.

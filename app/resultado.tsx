@@ -23,6 +23,7 @@ import {
 } from '@/constants/niveis';
 import { cores, fontes } from '@/constants/colors';
 import { Storage } from '@/lib/storage';
+import { track, EVENTOS } from '@/lib/analytics';
 
 export default function Resultado() {
   const { hz: hzParam } = useLocalSearchParams<{ hz: string }>();
@@ -39,9 +40,11 @@ export default function Resultado() {
   const [nome, setNome] = useState('tu');
   useEffect(() => {
     Storage.getNome().then((n) => setNome(n ?? 'tu'));
-  }, []);
+    track(EVENTOS.RESULTADO_VISTO, { hz, nivel: nivel.nome, nivel_hz: nivel.hz });
+  }, [hz, nivel.hz, nivel.nome]);
 
   const partilhar = () => {
+    track(EVENTOS.PARTILHA_CLICADA, { hz, nivel: nivel.nome });
     Share.share({
       message: `A minha frequência vibracional: ${hz}Hz — ${nivel.nome}. Descobre a tua em VION.`,
     }).catch(() => {});
@@ -159,7 +162,10 @@ export default function Resultado() {
               <GradientButton
                 label="Começar o trabalho de elevação"
                 variant="gold"
-                onPress={() => router.push('/evolucao')}
+                onPress={() => {
+                  track(EVENTOS.GUIA_CTA_CLICADO, { hz, nivel: nivel.nome, origem: 'resultado' });
+                  router.push('/evolucao');
+                }}
               />
               <View style={{ height: 12 }} />
               <GradientButton
