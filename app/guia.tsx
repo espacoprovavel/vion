@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
+import { Pressable, ScrollView, StyleSheet, Text, TextInput, View } from 'react-native';
 import { useLocalSearchParams, useRouter } from 'expo-router';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import CosmicBackground from '@/components/CosmicBackground';
@@ -9,6 +9,7 @@ import { getNivelMaisProximo, getNivelAcima } from '@/constants/niveis';
 import { gerarRelatorio, type Pratica } from '@/constants/relatorio';
 import { cores, fontes } from '@/constants/colors';
 import { Storage } from '@/lib/storage';
+import { SITE_URL } from '@/lib/config';
 
 /**
  * Relatório VION — formato leitura tipo e-book.
@@ -24,18 +25,49 @@ export default function Guia() {
 
   const [nome, setNome] = useState('tu');
   const [respostas, setRespostas] = useState<number[] | undefined>(undefined);
+  const [email, setEmail] = useState('');
+  const [aEnviar, setAEnviar] = useState(false);
+  const [enviado, setEnviado] = useState(false);
+  const [erroEnvio, setErroEnvio] = useState<string | null>(null);
 
   useEffect(() => {
     Storage.getNome().then((n) => setNome(n ?? 'tu'));
-    // Se houver um teste no histórico cujo hz bate com este relatório,
-    // tentamos passar as respostas para a leitura individual. Hoje o
-    // Storage não persiste respostas localmente — só na cloud — pelo
-    // que respostas fica indefinido para utilizador anónimo. A função
-    // gerarRelatorio degrada-se graciosamente.
     Storage.getHistorico().then(() => {
       setRespostas(undefined);
     });
   }, []);
+
+  const enviarPdf = async () => {
+    setErroEnvio(null);
+    const e = email.trim();
+    if (!/^\S+@\S+\.\S+$/.test(e)) {
+      setErroEnvio('Confirma o teu email.');
+      return;
+    }
+    setAEnviar(true);
+    try {
+      const resp = await fetch(`${SITE_URL}/api/relatorio`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          hz: hzInt,
+          nome: nome === 'tu' ? 'Amiga' : nome,
+          email: e,
+          respostas,
+        }),
+      });
+      const data = (await resp.json().catch(() => ({}))) as { ok?: boolean; erro?: string };
+      if (!resp.ok || !data.ok) {
+        setErroEnvio(data.erro ?? 'Não foi possível enviar. Tenta de novo daqui a pouco.');
+        return;
+      }
+      setEnviado(true);
+    } catch (err) {
+      setErroEnvio('Sem ligação. Verifica a internet e tenta de novo.');
+    } finally {
+      setAEnviar(false);
+    }
+  };
 
   const r = gerarRelatorio(hzInt, respostas);
   const nivel = getNivelMaisProximo(hzInt);
@@ -171,16 +203,48 @@ export default function Guia() {
             </Capitulo>
           )}
 
-          {/* ── Banner: versão e-book por email (em preparação) ── */}
+          {/* ── Banner: versão e-book por email ── */}
           <FadeIn delay={1000}>
             <View style={styles.banner}>
-              <Text style={styles.bannerLabel}>EM PREPARAÇÃO</Text>
-              <Text style={styles.bannerTit}>Versão e-book por email</Text>
-              <Text style={styles.bannerTxt}>
-                Em breve poderás receber este relatório em PDF, mais aprofundado, no teu email — com
-                a tua leitura individual personalizada a partir das tuas respostas. Quando estiver
-                pronto, avisamos-te.
-              </Text>
+              {enviado ? (
+                <>
+                  <Text style={styles.bannerLabel}>ENVIADO</Text>
+                  <Text style={styles.bannerTit}>Verifica o teu email</Text>
+                  <Text style={styles.bannerTxt}>
+                    O PDF segue para <Text style={{ color: cores.text }}>{email}</Text>. Pode demorar 1-2 minutos. Se não chegar, verifica a pasta de spam.
+                  </Text>
+                </>
+              ) : (
+                <>
+                  <Text style={styles.bannerLabel}>VERSÃO E-BOOK</Text>
+                  <Text style={styles.bannerTit}>Recebe em PDF, mais aprofundado</Text>
+                  <Text style={styles.bannerTxt}>
+                    Geramos uma edição personalizada com 7 capítulos — escritos para o teu nível e para a tua leitura individual — e enviamos-te ao email.
+                  </Text>
+                  <View style={styles.emailRow}>
+                    <TextInput
+                      value={email}
+                      onChangeText={setEmail}
+                      placeholder="tu@exemplo.com"
+                      placeholderTextColor={cores.muted}
+                      autoCapitalize="none"
+                      keyboardType="email-address"
+                      autoComplete="email"
+                      style={styles.emailInput}
+                      editable={!aEnviar}
+                    />
+                  </View>
+                  {erroEnvio && <Text style={styles.bannerErro}>{erroEnvio}</Text>}
+                  <View style={{ marginTop: 10 }}>
+                    <GradientButton
+                      label={aEnviar ? 'A gerar…' : 'Receber em PDF'}
+                      variant="gold"
+                      onPress={enviarPdf}
+                      disabled={aEnviar || !email}
+                    />
+                  </View>
+                </>
+              )}
             </View>
           </FadeIn>
 
@@ -376,4 +440,22 @@ const styles = StyleSheet.create({
   bannerLabel: { fontFamily: fontes.mono, color: cores.gold, fontSize: 10, letterSpacing: 2.5, marginBottom: 6 },
   bannerTit: { fontFamily: fontes.titulo, color: cores.text, fontSize: 20, marginBottom: 6 },
   bannerTxt: { fontFamily: fontes.corpo, color: cores.muted, fontSize: 13, lineHeight: 21 },
+  emailRow: { marginTop: 14 },
+  emailInput: {
+    backgroundColor: cores.bg,
+    borderWidth: 1,
+    borderColor: cores.border,
+    borderRadius: 12,
+    paddingHorizontal: 14,
+    paddingVertical: 12,
+    fontFamily: fontes.corpo,
+    color: cores.text,
+    fontSize: 15,
+  },
+  bannerErro: {
+    fontFamily: fontes.corpo,
+    color: cores.red,
+    fontSize: 12,
+    marginTop: 8,
+  },
 });

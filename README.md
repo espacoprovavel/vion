@@ -42,6 +42,9 @@ Sem chaves preenchidas a app corre em **modo dev** — o desbloqueio do guia pre
 | `EXPO_PUBLIC_POSTHOG_HOST` | Host PostHog (default `https://eu.i.posthog.com`). |
 | `EXPO_PUBLIC_REVENUECAT_IOS_KEY` | RevenueCat iOS (futuro) |
 | `EXPO_PUBLIC_REVENUECAT_ANDROID_KEY` | RevenueCat Android (futuro) |
+| `ANTHROPIC_API_KEY` | **Server-only.** Chave Anthropic (Claude Haiku 4.5) para gerar o relatório-ebook personalizado. Sem ela, o endpoint `/api/relatorio` devolve 503. |
+| `RESEND_API_KEY` | **Server-only.** Chave Resend para enviar o PDF por email. |
+| `RESEND_FROM` | **Server-only.** Remetente, ex.: `VION <relatorio@vion.pt>`. Default: `VION <onboarding@resend.dev>` (para testes Resend). |
 
 ## Estrutura
 
@@ -98,6 +101,20 @@ A Stripe está conectada via RevenueCat → App Store / Play Store. Sem chaves R
 ## Notificações
 
 Lembrete semanal automaticamente agendado às segundas 09:00 (após permissão).
+
+## Relatório E-book personalizado (PDF por email)
+
+Endpoint Vercel Function em `api/relatorio.ts`:
+
+- Recebe `{ hz, nome, email, respostas? }`
+- Carrega as **âncoras** do nível em `constants/ancoras.ts` (a Michelle escreve 7 frases-âncora por nível, 1 vez)
+- **Claude Haiku 4.5** expande as âncoras para 7 capítulos de 700-1100 palavras cada, integrando as respostas concretas do utilizador
+- **React-PDF** gera um e-book A4 com capa + índice + 7 capítulos
+- **Resend** envia o PDF em anexo para o email do utilizador
+
+Modo offline (sem `ANTHROPIC_API_KEY` ou `RESEND_API_KEY`): o endpoint devolve 503 com mensagem clara; o utilizador continua a ver a versão e-book no site, sem PDF.
+
+Custo estimado: ~€0,01 por relatório gerado (Claude) + free tier Resend (3000 emails/mês).
 
 ## Analytics
 
