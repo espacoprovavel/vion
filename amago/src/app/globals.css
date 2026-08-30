@@ -1,0 +1,73 @@
+@import 'tailwindcss';
+
+@theme {
+  --color-papel: #faf7f2;
+  --color-papel-2: #f3ede4;
+  --color-tinta: #221d19;
+  --color-tinta-suave: #6d635a;
+  --color-tinta-tenue: #9a9089;
+  --color-linha: #e4dbcf;
+  --color-barro: #a05a3f;
+  --color-barro-suave: #c98a6d;
+  --color-musgo: #4a6152;
+
+  --font-display: Georgia, 'Iowan Old Style', 'Palatino Linotype', 'Times New Roman', serif;
+  --font-corpo: ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    background-color: var(--color-papel);
+    color: var(--color-tinta);
+    font-family: var(--font-corpo);
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  ::selection {
+    background-color: #ead9cd;
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-barro);
+    outline-offset: 3px;
+    border-radius: 2px;
+  }
+}
+
+@utility display {
+  font-family: var(--font-display);
+  font-weight: 400;
+  letter-spacing: -0.015em;
+}
+
+/* Entradas suaves — o tom da app pede que nada apareça de repente. */
+@keyframes surge {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@utility surge {
+  animation: surge 620ms cubic-bezier(0.22, 0.8, 0.3, 1) both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
